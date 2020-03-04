@@ -33,6 +33,9 @@ switch(command) {
     case "concert-this":
         bandsInTownSearch(nameValue);
         break;
+    case "movie-this":
+        movieSearch(nameValue);
+        break;
     default:
         console.log('Please input a proper command');
 }
@@ -72,6 +75,32 @@ function bandsInTownSearch(artist) {
             console.log('Venue: ' + venueName + '\nVenue Location: ' + venueLoc + '\nDate: ' + date);
             console.log('\n------------------------------------\n');
         }
+    }).catch((err) => {
+        console.error(err);
+    });
+}
+
+function movieSearch(movie) {
+    if(movie === "") {
+        movie = "Mr. Nobody";
+    }
+
+    let url = 'http://www.omdbapi.com/?apikey=trilogy&t=' + movie.replace(/\s/g, "%20");
+
+    function getRating(rating) {
+        if(rating == undefined) {
+            return "";
+        } else {
+            return rating[0].Value;
+        }
+    }
+
+    axios.get(url).then(( response ) => {
+        let movie = response.data;
+        let rating = getRating(movie.Ratings);
+        console.log('Movie Title: ' + movie.Title + '\nReleased: ' + movie.Released + '\nIMDB Rating: ' +
+        rating + '\nCountry: ' + movie.Country + '\nLanguage: ' + movie.Language + 
+        '\nPlot: ' + movie.Plot + '\nActors: ' + movie.Actors);
     }).catch((err) => {
         console.error(err);
     });
