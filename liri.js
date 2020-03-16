@@ -65,7 +65,7 @@ function spotifySearch(song) {
 
 function bandsInTownSearch(artist) {
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then((response) => {
-        console.log(response.data[0]);
+        //console.log(response.data[0]);
         let eventData = response.data;
         for(i = 0; i < eventData.length; i++) {
             let venueName = eventData[i].venue.name;
